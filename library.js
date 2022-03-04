@@ -1,10 +1,30 @@
 var idx=1;
+var logged=false;
+document.getElementById("logged-in-user-name").innerHTML = "No user logged in"
 let books_data=[
-    {id: 1, name: "A", user: "x", lender: "", borrower: "", action: ""},
-    {id: 2, name: "B", user: "x", lender: "", borrower: "", action: ""},
-    {id: 3, name: "C", user: "x", lender: "", borrower: "", action: ""},
-    {id: 4, name: "D", user: "x", lender: "", borrower: "", action: ""},
+    {id: 1, name: "A", user: "x", lender: "", borrower: "", action: '<button>Borrow</button>'},
+    {id: 2, name: "B", user: "x", lender: "", borrower: "", action: "<button>Borrow</button>"},
+    {id: 3, name: "C", user: "x", lender: "", borrower: "", action: "<button>Borrow</button>"},
+    {id: 4, name: "D", user: "x", lender: "", borrower: "", action: "<button>Borrow</button>"},
 ]
+let users = ["diviosho","sushant","vicky","mohit","abhinav"];
+function changeLoggedInUser(){
+    console.log("yes")
+    var user = document.getElementById("logged-user").value
+    if(user!=null && !logged){
+        for(var i=0;i<users.length;i++){
+            if(users[i]===user){
+                logged=true;
+                document.getElementById("logged-in-user-name").innerHTML = user;
+                add_new();
+                break;
+            }
+        }
+    }
+}
+function add_new(){
+    document.getElementById("info-table").insertRow(idx++).innerHTML = '<tr><td><input type="text" id="idnew" placeholder="id" required></input></td><td><input type="text" id="titlenew" placeholder="title" required></input></td><td><input type="text" id="authornew" placeholder="author" required></input></td><td><input type="text" id="lendernew"></input></td><td><input type="text" id="borrowernew"></input></td><td><button type="button" onclick="insert()">Add</button></td></tr>'
+}
 function insert(){
     var id = document.getElementById("idnew");
     var title = document.getElementById("titlenew");
@@ -43,8 +63,6 @@ if(1){
         new_user.innerHTML = books_data[i].user
         new_lender.innerHTML = books_data[i].lender
         new_borrower.innerHTML = books_data[i].borrower
-    }
-    if(1){
-        document.getElementById("info-table").insertRow(idx++).innerHTML = '<tr><td><input type="text" id="idnew" placeholder="id" required></input></td><td><input type="text" id="titlenew" placeholder="title" required></input></td><td><input type="text" id="authornew" placeholder="author" required></input></td><td><input type="text" id="lendernew"></input></td><td><input type="text" id="borrowernew"></input></td><td><button type="button" onclick="insert()">Add</button></td></tr>'
+        new_action.innerHTML = books_data[i].action
     }
 }
