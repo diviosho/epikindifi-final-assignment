@@ -1,5 +1,6 @@
-var idx=1;
+var idx=1,id=5;
 var logged=false;
+var logged_user = ""
 document.getElementById("logged-in-user-name").innerHTML = "No user logged in"
 let books_data=[
     {id: 1, name: "A", user: "x", lender: "", borrower: "", action: '<button>Borrow</button>'},
@@ -8,13 +9,14 @@ let books_data=[
     {id: 4, name: "D", user: "x", lender: "", borrower: "", action: "<button>Borrow</button>"},
 ]
 let users = ["diviosho","sushant","vicky","mohit","abhinav"];
+
 function changeLoggedInUser(){
-    console.log("yes")
     var user = document.getElementById("logged-user").value
     if(user!=null && !logged){
         for(var i=0;i<users.length;i++){
             if(users[i]===user){
                 logged=true;
+                logged_user = user
                 document.getElementById("logged-in-user-name").innerHTML = user;
                 add_new();
                 break;
@@ -23,30 +25,26 @@ function changeLoggedInUser(){
     }
 }
 function add_new(){
-    document.getElementById("info-table").insertRow(idx++).innerHTML = '<tr><td><input type="text" id="idnew" placeholder="id" required></input></td><td><input type="text" id="titlenew" placeholder="title" required></input></td><td><input type="text" id="authornew" placeholder="author" required></input></td><td><input type="text" id="lendernew"></input></td><td><input type="text" id="borrowernew"></input></td><td><button type="button" onclick="insert()">Add</button></td></tr>'
+    document.getElementById("info-table").insertRow(idx++).innerHTML = `<tr><td>${id}</td><td><input type="text" id="titlenew" placeholder="title" required></input></td><td><input type="text" id="authornew" placeholder="author" required></input></td><td>${logged_user}</td><td>-</td><td><button type="button" onclick="insert()">Add</button></td></tr>`
 }
 function insert(){
-    var id = document.getElementById("idnew");
     var title = document.getElementById("titlenew");
     var author = document.getElementById("authornew");
-    var lender = document.getElementById("lendernew");
-    var borrower = document.getElementById("borrowernew");
     let table = document.getElementById("info-table")
-    books_data.push(id,title,author,lender,borrower,"");
+    books_data.push(id,title,author,logged_user,"","");
     var row = table.insertRow(idx-1)
     idx++;
-    console.log(id.value);
     var new_id = row.insertCell(0)        
     var new_name = row.insertCell(1)        
     var new_user = row.insertCell(2)        
     var new_lender = row.insertCell(3)        
     var new_borrower = row.insertCell(4)
     var new_action = row.insertCell(5)
-    new_id.innerHTML = id.value
+    new_id.innerHTML = id++
     new_name.innerHTML = title.value
     new_user.innerHTML = author.value
-    new_lender.innerHTML = lender.value
-    new_borrower.innerHTML = borrower.value
+    new_lender.innerHTML = logged_user
+    new_borrower.innerHTML = ""
 }
 if(1){
     let table = document.getElementById("info-table")
