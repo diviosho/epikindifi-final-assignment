@@ -1,14 +1,14 @@
 var idx=1,id=5;
 var logged=false;
-var logged_user = ""
+let logged_user = ""
 document.getElementById("logged-in-user-name").innerHTML = "No user logged in"
 let books_data=[
-    {id: 1, name: "A", user: "x", lender: "", borrower: "", action: '<button>Borrow</button>'},
-    {id: 2, name: "B", user: "x", lender: "", borrower: "", action: "<button>Borrow</button>"},
-    {id: 3, name: "C", user: "x", lender: "", borrower: "", action: "<button>Borrow</button>"},
-    {id: 4, name: "D", user: "x", lender: "", borrower: "", action: "<button>Borrow</button>"},
+    {id: 1, name: "book1", user: "A", lender: "A", borrower: "B", action: ""},
+    {id: 2, name: "book2", user: "B", lender: "B", borrower: "", action: ""},
+    {id: 3, name: "book3", user: "C", lender: "C", borrower: "A", action: ""},
+    {id: 4, name: "book4", user: "D", lender: "D", borrower: "C", action: ""}
 ]
-let users = ["diviosho","sushant","vicky","mohit","abhinav"];
+let users = ["A","B","C","D"];
 
 function changeLoggedInUser(){
     var user = document.getElementById("logged-user").value
@@ -26,6 +26,7 @@ function changeLoggedInUser(){
 }
 function add_new(){
     document.getElementById("info-table").insertRow(idx++).innerHTML = `<tr><td>${id}</td><td><input type="text" id="titlenew" placeholder="title" required></input></td><td><input type="text" id="authornew" placeholder="author" required></input></td><td>${logged_user}</td><td>-</td><td><button type="button" onclick="insert()">Add</button></td></tr>`
+    after_login(true);
 }
 function insert(){
     var title = document.getElementById("titlenew");
@@ -61,6 +62,31 @@ if(1){
         new_user.innerHTML = books_data[i].user
         new_lender.innerHTML = books_data[i].lender
         new_borrower.innerHTML = books_data[i].borrower
-        new_action.innerHTML = books_data[i].action
+        new_action.innerHTML = ""
+    }
+}
+function borrower(idx){
+    let table = document.getElementById("info-table")
+    let row = table.rows[idx];
+    row.cells[5].innerHTML = `<button onclick="returner(${idx})">Return</button>`
+    row.cells[4].innerHTML = logged_user;
+}
+function returner(idx){
+    let table = document.getElementById("info-table")
+    let row = table.rows[idx];
+    row.cells[5].innerHTML = `<button onclick="borrower(${idx})">Borrow</button>`
+    row.cells[4].innerHTML = "";
+}
+function after_login(check){
+    let table = document.getElementById("info-table")
+    for(let i =1; i<table.rows.length-1;i++){
+        let row = table.rows[i];
+        if(row.cells[4].innerHTML==="" && check && row.cells[3].innerHTML!=logged_user){
+            console.log(row.cells[4].innerHTML);
+            row.cells[5].innerHTML = `<button onclick="borrower(${i})">Borrow</button>`
+        }
+        else if(row.cells[4].innerHTML===logged_user){
+            row.cells[5].innerHTML = `<button onclick="returner(${i})">Return</button>`
+        }
     }
 }
