@@ -25,7 +25,7 @@ function changeLoggedInUser(){
     }
 }
 function add_new(){
-    document.getElementById("info-table").insertRow(idx++).innerHTML = `<tr><td>${id}</td><td><input type="text" id="titlenew" placeholder="title" required></input></td><td><input type="text" id="authornew" placeholder="author" required></input></td><td>${logged_user}</td><td>-</td><td><button type="button" onclick="insert()">Add</button></td></tr>`
+    document.getElementById("info-table").insertRow(idx++).innerHTML = `<tr><td></td><td><input type="text" id="titlenew" placeholder="title" required></input></td><td><input type="text" id="authornew" placeholder="author" required></input></td><td>${logged_user}</td><td>-</td><td><button type="button" onclick="insert()">Add</button></td></tr>`
     after_login(true);
 }
 function insert(){
